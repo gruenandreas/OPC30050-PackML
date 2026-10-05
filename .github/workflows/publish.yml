@@ -89,7 +89,18 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+      # Tags, which the default shallow fetch does not bring. A manifest naming a baselineTag
+      # asks publish to read the last released edition's STS out of that tag and render a
+      # redline beside the document; without the tag in the checkout there is nothing to read,
+      # and the failure would be a missing redline in CI only - green, and silently answering
+      # nobody's question. A specification repository is markdown and XML, so its whole history
+      # is cheap to fetch.
+      #
+      # Harmless where no manifest sets baselineTag: nothing asks for a tag and nothing reads
+      # one. Narrow this to fetch-tags: true with a depth if the history ever gets expensive.
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-dotnet@v6
         with:

@@ -256,6 +256,34 @@ The label must match the entry in `manifest.json` (`OPC006`), and the id must ex
 
 Anchor prefixes: `sec-` clauses, `tbl-` tables, `fig-` figures, `ref-` normative references.
 
+### You need not type a table's or figure's anchor
+
+`update` renames them to the convention — `tbl-` or `fig-` plus a slug of the caption — and
+rewrites every citation with them. So write `{#t1}`, cite `[](#t1)`, and let the verb make both
+conventional. It is safe because a markdown anchor never reaches the published document: the
+build replaces it with the numbered id the STS carries, so nothing outside the repository can be
+pointing at one.
+
+**Where the conventional name is taken, the rename is reported and not made.** Two targets
+sharing an anchor is the one outcome worse than an unconventional name, because a citation then
+resolves to whichever the converter sees first.
+
+That collision is often perfectly legitimate: two clauses carry a table of the same name — an XML
+annex and a JSON annex that each define a *Reference* — and only one of them can hold
+`tbl-reference`. Say so once, on the caption, and the anchor is left exactly as written and not
+mentioned again:
+
+```markdown
+*Table - Reference* {#tbl-json-reference anchor=keep}
+```
+
+`anchor=keep` is the only value the attribute takes; `anchor=kept` is reported rather than
+quietly obeyed. It suppresses nothing else — a citation with no target is still reported — and a
+run that keeps some says so in one line rather than repeating the name of every settled anchor.
+
+Reach for it when you have read the report and the name is the one you want. Without it the same
+unanswerable line prints on every run, which is how a report stops being read.
+
 ## Node tables
 
 You write them. Generating a node table from the NodeSet does not work consistently -- these
@@ -751,6 +779,64 @@ fail the build.
 A finding on a line you did not touch still appears in the checks tab and in the job
 summary — code scanning only annotates lines within the diff, which is a GitHub constraint,
 not a judgement about which findings matter.
+
+## Seeing what your draft changes
+
+Name the tag of the last published release in `manifest.json`:
+
+```json
+"baselineTag": "v1.05.3"
+```
+
+and every publish — yours and CI's — produces a **redline**: what this draft changes about that
+edition. Two of them:
+
+- `docs/<spec>/diff.html` — the page, with added words underlined, removed words struck
+  through, and a bar in the margin of every clause, row and figure that moved. Works everywhere,
+  and it is committed and served alongside the document, so reviewers get a URL rather than a
+  build to run.
+- `artifacts/<doc>.diff.docx` — the same comparison as Word's own tracked changes, which
+  is what a working group marks up: comment, accept, reject, change bars. Needs Word, so
+  Windows only; produced by `tools/word-compare.ps1` in this repository rather than by the tool.
+
+**Set it once, when a cycle opens**, next to `identity.version`. That is the whole point: a cycle
+is many commits long and no reviewer can reconstruct it by reading commits, so the compare point
+belongs to the document rather than to a command somebody has to remember to type. A manifest
+naming no tag produces no redline and no mention of one.
+
+**A tag, not a commit.** A tag is the only form that means anything to whoever reads the page —
+it is what the banner prints. And the committed `artifacts/<doc>.xml` cannot answer this question
+at all: CI rebuilds and recommits it on every push to `main`, so it is the *last push*, not the
+last release.
+
+**The tag is taken as written.** Nothing reads anything into its name, into what it points at, or
+into whether it is in this branch's history — tag a release wherever your working group tags
+releases. If the tag is there the documents are compared; if it is not, that is said and the
+document publishes without a redline. Nothing here fails a build.
+
+### One-offs
+
+| | |
+|---|---|
+| `--baseline-tag <ref>` | another tag, for one run |
+| `--baseline <file>` | an STS outright — an edition not in this repository's history, such as the document a migration came from |
+| `--diff` | compare against the committed `artifacts/<doc>.xml`, which locally is your last push's build: "what have I changed since then" |
+
+### Why not just diff the two renderings
+
+Because the numbers in this document are derived. You write no clause numbers, no table numbers
+and no figure numbers — they come from position, so inserting one clause renumbers every clause,
+table and figure after it, and every cross-reference to them. A text diff of two renderings
+reports the whole second half of the document as changed, and the one paragraph you actually
+rewrote is somewhere in it.
+
+The redline compares document to document instead: a clause is matched to a clause by what it
+says, and its number is simply not part of the comparison. Insert a clause and you see one
+inserted clause.
+
+The numbers on the page are this draft's, not the published edition's. That is the only sane
+choice — they are the numbers the document will have — but it is why the page says so at the
+top, and why it is a page of its own rather than marks on the specification.
 
 ## Getting from the rendering back to the source
 

@@ -3,7 +3,7 @@
   "isRoot": true,
   "tools": {
     "OPCFoundation.Opc.Ua.SpecificationPublisher": {
-      "version": "1.0.68",
+      "version": "1.0.77",
       "commands": [
         "Opc.Ua.SpecificationPublisher"
       ],

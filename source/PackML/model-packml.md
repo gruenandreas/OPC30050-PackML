@@ -84,7 +84,6 @@ source: figures/fig_11_packmlbaseobjecttype-overview.png
 | Subtype of the 0:BaseObjectType defined in [](#ref-uapart5) |  |  |  |  |  |
 | 0:HasComponent | Object | 4:Admin |  | 4:PackMLAdminObjectType | M |
 | 0:HasComponent | Object | 4:BaseStateMachine |  | 4:PackMLBaseStateMachineType | M |
-| 0:HasComponent | Method | 4:RemoteCommand |  |  | O |
 | 0:HasComponent | Method | 4:SetInterlock |  |  | O |
 | 0:HasComponent | Method | 4:SetMachSpeed |  |  | M |
 | 0:HasComponent | Method | 4:SetParameter |  |  | M |
@@ -109,8 +108,6 @@ TagID - provide an additional field in which an associated name (third party cro
 *SetProduct* *Method* allows a *Client* to change the product(s) and the *ProcessVariables* and Ingredients. For additional details see the definition of *SetProduct* *Method* in [](#sec-setproduct-method).
 
 *SetParameter* *Method* allows a *Client* to set the parameters for the machine. For additional details see the definition of SetParameter *Method* in [](#sec-setparameter-method).
-
-*RemoteCommand* *Method* allows a *Client* to send a command to the UA *Server* that is to be passed to the PackML *Server* and or upstream or downstream *Servers*. Parameters sent to the Remote system are typically used in the EXECUTE and STARTING states for a production task. With the restriction that *RemoteCommand* Parameter Values are limited to REAL values. For additional details see the definition of the *RemoteCommand* *Method* in [](#sec-remotecommand-method)
 
 SetInterlock method allows a *Client* to set one of the interlocks associated with the system.  For additional details see the definition of the SetInterlock *Method* in [](#sec-setinterlock-method)
 
@@ -667,21 +664,6 @@ The *PackMLProductDataType* provides the PackML product information. The *PackML
 | ProductID	| Int32	| A unique number assigned to the product. |
 | ProcessVariables	| PackMLDescriptorDataType[]	| The array of Process variables associated with this product |
 | Ingredients	| PackMLIngredientsDataType[]	| The array of ingredients associated with this product. |
-
-
-#### PackMLRemoteInterfaceDataType {#sec-packmlremoteinterfacedatatype}
-
-The *PackMLRemoteInterfaceDataType* provides the PackML remote connection information. The *PackMLRemoteInterfaceDataType* is formally defined in [](#tbl-packmlremoteinterfacedatatype-structure).
-
-
-*Table - PackMLRemoteInterfaceDataType Structure* {#tbl-packmlremoteinterfacedatatype-structure defines=PackMLRemoteInterfaceDataType}
-| Name	| Type	| Description |
-| --- | --- | --- |
-| PackMLRemoteInterfaceDataType	| Structure	| This datatype is used with the RemoteCommand Method defined in 6.7.15.. |
-| Number	| Int32	| This is the unique number for the downstream/upstream unit machine using a common tag structure as the unit machine. The number should correspond to a number on the communication network, such as network ID, or IP address identifier.  This number corresponds to the “information sender” that is setting the command data in the RemoteInterface[#] structure of the unit machine. |
-| ControlCmdNumber	| Int32	| A user defined command number associated with coded value from a remote unit. This number is a coded value sent from one node on the network to another. The value can be associated with a unit mode change request, speed change request, a state change request, etc. |
-| CmdValue	| Int32	| This is the command value associated with the ControlCmdNumber above. The command value may be the speed requested, state change, etc. <br><br>Example:For an upstream machine designated as #2 a control command number of 5 may be related to the speed setting value for the machine. A value of 400 can be used to modify the remote machine setpoint. <br><br>Command.RemoteInterface[1].Number = 2 <br><br>Command.RemoteInterface[1] <br><br>ControlCmdNumber = 5 <br><br>Command.RemoteInterface[1].CmdValue = 400 |
-| Parameter	| PackMLDescriptorDataType[]	| The parameter tags associated to commanded remote interface are typically used for command parameters that are given to the unit machine from remote machines. The parameters are typically needed for coordinating the unit machine or production with other machines. The parameter value may be anything from machine limit parameters to temperatures and counter presets. The parameters are typically limited to machine parameters as product and process parameters are described in later tags. |
 
 #### PackMLParameterRealDataType {#sec-packmlparameterrealdatatype}
 
@@ -1345,61 +1327,6 @@ This *Method* is used as part of the *PackMLExecuteStateMachineType*. It allows 
 | References | NodeClass | BrowseName | DataType | TypeDefinition | ModellingRule |
 | | | | | | |
 
-
-#### RemoteCommand Method {#sec-remotecommand-method}
-
-This *Method* is used to issue a command to the UA *Server* that can then be passed on to any other internal system as illustrated in [](#fig-remote-command-and-internal-systems) or it can be used to pass information on to an upstream or downstream system as illustrated in [](#fig-remote-command-line-and-upstreamdownstream-systems). In both cases, it is up to the UA *Server* and/or the underlying system to determine when the command is passed on. 
-
-```{figure}
-id: fig-remote-command-and-internal-systems
-caption: Remote Command and Internal systems
-source: figures/fig_19_remote-command-and-internal-systems.png
-```
-
-```{figure}
-id: fig-remote-command-line-and-upstreamdownstream-systems
-caption: Remote Command - Line and Upstream/Downstream systems
-source: figures/fig_20_remote-command-line-and-upstreamdownstream-systems.png
-```
-
-The *RemoteCommand* Method parameters are defined in [](#tbl-remotecommand-method-parameters)
-
-**Signature**
-```
-	RemoteCommand(
-		[in] PackMLRemoteInterfaceDataType[] RemoteInterface
-	);
-```
-
-*Table - RemoteCommand Method Parameters* {#tbl-remotecommand-method-parameters}
-| Argument	| Description |
-| --- | --- |
-| RemoteInterface | This structure is an array of remote interface information which include Number, ControlCmdNumber, CmdValue and Parameter. Parameter itself is a structure formally defined in [](#sec-packmldescriptordatatype). The PackMLRemoteInterfaceDataType is formally defined in [](#sec-packmlremoteinterfacedatatype) |
-
-*Method* result codes are defined in [](#tbl-remotecommand-method-result-codes).
-
-*Table - RemoteCommand Method Result Codes* {#tbl-remotecommand-method-result-codes}
-| Result Code	| Description |
-| --- | --- |
-| Bad_MethodInvalid	| See OPC 10000-4 – Services for the description of this result code. (The Method id does not refer to a Method for the specified Object.) |
-| Bad_NotImplemented	| See OPC 10000-4 – Services for the description of this result code. (Requested operation is not implemented.) |
-| Bad_NodeIdUnknown	| See OPC 10000-4 – Services for the description of this result code. (Used to indicate that the specified Object is not valid) |
-| Bad_InvalidState	| See OPC 10000-4 – Services for the description of this result code. (The operation cannot be completed because the Object is closed, uninitialized or in some other invalid state.) |
-| Bad_MethodInvalid	| See OPC 10000-4 – Services for the description of this result code. (The Method id does not refer to a Method for the specified Object.) |
-| Bad_ArgumentsMissing	| See OPC 10000-4 – Services for the description of this result code (The Client did not specify all of the input arguments for the Method.) |
-| Bad_TooManyArguments	| See OPC 10000-4 – Services for the description of this result code (The Client specified more input arguments than defined for the Method.) |
-| Bad_InvalidArgument	| See OPC 10000-4 – Services for the description of this result code. (Used to indicate in the operation level results that one or more of the input arguments are invalid. The inputArgumentResults contain the specific status code for each invalid argument.) |
-| Bad_TypeMismatch	| See OPC 10000-4 – Services for the description of this result code. (Used to indicate that an input argument does not have the correct data type.) |
-
-[](#tbl-remotecommand-method-addressspace-definition) specifies the *AddressSpace* representation for the *RemoteCommand Method*. *RemoteCommand* includes an array of *InputArguments*, where the input argument details are provided in [](#tbl-remotecommand-method-parameters).
-
-
-*Table - RemoteCommand Method AddressSpace Definition* {#tbl-remotecommand-method-addressspace-definition}
-| Attribute	| Value | | | | |
-| --- | --- | --- | --- | --- | --- |
-| BrowseName	| RemoteCommand | | | | |
-| References	| NodeClass	| BrowseName 	| DataType	| TypeDefinition	| ModellingRule
-| HasProperty	| Variable	| InputArguments	| Argument[] 	| PropertyType	| Mandatory
 
 #### SetInterlock Method {#sec-setinterlock-method}
 

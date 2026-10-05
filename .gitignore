@@ -20,6 +20,14 @@ _work/
 # every line anyone inserts and that nothing outside this repository reads.
 *.stsmap.json
 
+# The two halves of a Word redline, which `publish --diff` writes beside the STS it rendered.
+# A redline is a reading of a draft against the published edition, made locally and thrown
+# away; it is not an edition of anything. Committing one would put a .docx in the repository
+# that is out of date the moment the next paragraph changes, and whose whole content is already
+# derivable from the two documents that are committed.
+*.diff.docx
+*.baseline.docx
+
 # Visual Studio's local state. Its FileContentIndex holds files open, so git cannot
 # even read them to decide they should be ignored.
 .vs/

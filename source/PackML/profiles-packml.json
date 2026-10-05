@@ -134,12 +134,6 @@
     },
     {
       "category": "Server",
-      "name": "PackML RemoteCommand",
-      "group": "PackML Model",
-      "description": "The Server supports the RemoteCommand Method"
-    },
-    {
-      "category": "Server",
       "name": "PackML SetInterlock",
       "group": "PackML Model",
       "description": "The Server supports the SetInterlock Method"
@@ -167,12 +161,6 @@
       "name": "PackML Status Interlock",
       "group": "PackML Model",
       "description": "The Server includes support for at least one MaterialInterlock and the summary MaterialInterlocked flag."
-    },
-    {
-      "category": "Server",
-      "name": "PackML Status RemoteParameter",
-      "group": "PackML Model",
-      "description": "The Server supports exposing of the configured RemoteParameter"
     },
     {
       "category": "Server",
@@ -380,12 +368,6 @@
     },
     {
       "category": "Client",
-      "name": "PackML RemoteCommand Client",
-      "group": "PackML Model",
-      "description": "The Client makes use of the optional RemoteCommand Method"
-    },
-    {
-      "category": "Client",
       "name": "PackML SetInterlock Client",
       "group": "PackML Model",
       "description": "The Client makes use of the optional SetInterlock Method"
@@ -407,12 +389,6 @@
       "name": "PackML-Status Interlock Client",
       "group": "PackML Model",
       "description": "The Client makes use of at least one MaterialInterlock and the summary MaterialInterlocked flag."
-    },
-    {
-      "category": "Client",
-      "name": "PackML-Status RemoteParameter Client",
-      "group": "PackML Model",
-      "description": "The Client makes use of exposing of the configured RemoteParameter"
     },
     {
       "category": "Client",
@@ -581,10 +557,6 @@
           "optional": true
         },
         {
-          "name": "PackML RemoteCommand",
-          "optional": true
-        },
-        {
           "name": "PackML SetInterlock",
           "optional": true
         },
@@ -602,10 +574,6 @@
         },
         {
           "name": "PackML Status Interlock",
-          "optional": true
-        },
-        {
-          "name": "PackML Status RemoteParameter",
           "optional": true
         },
         {
@@ -765,10 +733,6 @@
           "optional": true
         },
         {
-          "name": "PackML RemoteCommand Client",
-          "optional": true
-        },
-        {
           "name": "PackML SetInterlock Client",
           "optional": true
         },
@@ -782,10 +746,6 @@
         },
         {
           "name": "PackML-Status Interlock Client",
-          "optional": true
-        },
-        {
-          "name": "PackML-Status RemoteParameter Client",
           "optional": true
         },
         {

@@ -1,18 +1,19 @@
 {
   "$comment": "Written by Opc.Ua.SpecificationPublisher upgrade. 'files' is what the tool last wrote, so a file you have edited can be told from one that is merely out of date; 'yours' is the files you have taken over, which it will not touch again. Not edited by hand.",
-  "version": "1.0.68",
+  "version": "1.0.77",
   "files": {
     ".gitattributes": "796c85299b5b5b58b6dbd6d3d0b749e3963ab16fe36384de83567e0e555c9e12",
     ".github/pull_request_template.md": "b05e8e41a3e0431f2cabe3cd7fc0f24aa0c2fe49dbfcb09eea300060c5caf094",
-    ".github/workflows/publish.yml": "07aadae0d241ee1cebb342cc2afb18bd6d036f8d72c8d247e08bb287212c0802",
-    ".gitignore": "ff1b0d5a105ec4bc3f62c215df7f2caa2685c74a9f9501e79cc09197cc0589f5",
+    ".github/workflows/publish.yml": "b3a551c474959405ff88ea347a9bc1dffb2f0a143da25c5cd2e3c2502c85cd0f",
+    ".gitignore": "10c59ff90e19b420bd830aacf17f63e012f3c5fa8decef3f5c37e6654f2fb7c2",
     ".markdownlint-cli2.yaml": "affef9a767ea74aee2cdd18584e09697ec46f6d58add0d8036c80c3ba95f6d22",
-    "AUTHORING.md": "dc177d9098c33d824b1a2d0cc464d11a770d8ed84aed60c3f5fa1a0734dab6a2",
+    "AUTHORING.md": "f7d1342f2be2211a8e14d1bd4ed45d39717695e636a1000d5e72acb3d9663a3f",
     "skills/opcua-companion-spec/SKILL.md": "90e3a68bffb6b1def587ac6fcdb99ee9e40c69c8f1543753bb774f0ada3657af",
     "skills/opcua-word-to-markdown/SKILL.md": "e04540387efda2f9a5d6efa2dfefe6b1cb4e573e62d9158ab14c1857a71e6a95",
     "source/figures/uashapes-library.drawio.xml": "8c483068797be44deef9d6cc7de2bcde5d3d451221f9d2f4d0fe171d332e947b",
     "tools/office-to-svg.ps1": "5859a009b1b79e1dba11d7395131db8d7ca4d7959f3cbd10f696fec397a8dead",
-    "tools/office-to-svg.sh": "826f0d4ad1601bf6a80286ba0fcfd2f9728f297d930ceb0e77a68373af9a1efe"
+    "tools/office-to-svg.sh": "826f0d4ad1601bf6a80286ba0fcfd2f9728f297d930ceb0e77a68373af9a1efe",
+    "tools/word-compare.ps1": "b1f877212b2aba026455a9cfa02c5d0a7ab3807eee62bf05b06dfbfc9e9ccdc2"
   },
   "yours": [
     "legal.md"

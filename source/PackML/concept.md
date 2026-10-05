@@ -148,15 +148,6 @@ The format and meaning of the material interlock bits are determined by the mach
 | Labeler | 2 |  Small Box Label |
 
 
-##### Remote Interface Structure {#sec-remote-interface}
-
-An array of structure elements used for coordinating upstream or downstream machines in a cell with multiple unit machines.
-
-The array is a length that is equal to the number of machines that will be sending commands. This could be expanded if a machine is capable of receiving material from multiple upstream and/or downstream machines, thereby receiving multiple commands and parameters.
-            
-This can be used for machine to machine coordination without supervisory control, or for tightly controlled units under supervisory control. These tags are typically used for consumption within the unit machine procedure. Specifically, if a remote controller was issuing commands, the commands would be read by this tag and used in the unit machine.
-
-
 ### OPC UA Overview {#sec-opc-ua-overview}
 
 #### Introduction {#sec-introduction}
